@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * Created by ChrisYang on 5/18/15.
  */
 public class HW8 {
-    private static int inf = Integer.MAX_VALUE;
+    private static int inf = Integer.MAX_VALUE/2;
 
     public static void main(String[] args) {
 
@@ -58,16 +58,19 @@ public class HW8 {
 
         boolean status = needsExpanding(verticesList);
         while(status == true) {
-            int mincolumn = 0;
-            int min = inf;
+
 
             for (int column = 0; column < graph.length; column++) {
-                if ((graph[row][column] != 0 || verticesList[column].isExpanded() == false)) {
-                    verticesList[column].setWeight(graph[row][column]);
-                    if (graph[row][column] < min) {
-                        min = graph[row][column];
-                        mincolumn = column;
-                    }
+                if ((graph[row][column] != 0 || verticesList[column].isExpanded() == false))
+                    verticesList[column].setWeight(getMin(graph[row][column] + verticesList[row].getWeight(), verticesList[column].getWeight()));
+            }
+
+            int min = inf;
+            int mincolumn = -1;
+            for(Vertex element: verticesList){
+                if (element.isExpanded() == false && element.getWeight() < min) {
+                    min = element.getWeight();
+                    mincolumn = element.getIndex();
                 }
             }
 
@@ -89,13 +92,12 @@ public class HW8 {
         return false;
     }
 
-    public static int getMin(ArrayList<Integer> weightLists){
-        int min = inf;
-        for (Integer element: weightLists) {
-            if (element < min)
-                min = element;
-        }
-        return min;
+    public static int getMin(int a, int b){
+        if (a < b)
+            return a;
+        else
+            return b;
+
     }
 
 }
