@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * Created by ChrisYang on 5/18/15.
  */
 public class HW8 {
-    private static int inf = Integer.MAX_VALUE/2;
+    private static int inf = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
 
@@ -19,7 +19,6 @@ public class HW8 {
 //        }
 
         Vertex A = new Vertex(0, 'A');
-        System.out.println(A.getName());
         Vertex B = new Vertex(1, 'B');
         Vertex C = new Vertex(2, 'C');
         Vertex D = new Vertex(3, 'D');
@@ -38,13 +37,11 @@ public class HW8 {
         int[][] graph = new int[][]{
                 {0, 7, 9, inf, inf, 14},
                 {7, 0, 10, 15, inf, inf},
-                {9, 10, 0, 11, inf, inf},
+                {9, 10, 0, 11, inf, 2},
                 {inf, 15, 11, 0, 6, inf},
                 {inf, inf, inf, 6, 0, 9},
                 {14, inf, 2, inf, 9, 0}
         };
-
-        System.out.println(graph[2][5]);
 
         return graph;
     }
@@ -61,8 +58,12 @@ public class HW8 {
 
 
             for (int column = 0; column < graph.length; column++) {
-                if ((graph[row][column] != 0 || verticesList[column].isExpanded() == false))
-                    verticesList[column].setWeight(getMin(graph[row][column] + verticesList[row].getWeight(), verticesList[column].getWeight()));
+                if ((graph[row][column] != 0 && graph[row][column] != inf && verticesList[column].isExpanded() == false)) {
+                    if (graph[row][column] + verticesList[row].getWeight() < verticesList[column].getWeight()) {
+                        verticesList[column].setWeight(graph[row][column] + verticesList[row].getWeight());
+                        verticesList[column].setParent(verticesList[row].getName());
+                    }
+                }
             }
 
             int min = inf;
@@ -75,8 +76,6 @@ public class HW8 {
             }
 
             verticesList[mincolumn].setExpanded(true);
-            verticesList[mincolumn].setWeight(min);
-            verticesList[mincolumn].setParent(verticesList[row].getName());
             row  = mincolumn;
             status = needsExpanding(verticesList);
         }
