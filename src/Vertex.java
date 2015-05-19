@@ -1,5 +1,7 @@
 /**
- * Created by ChrisYang on 5/18/15.
+ * @author      Christopher Yang <cyang001@citymail.cuny.edu>
+ * @version     1.0
+ * @since       2015-05-19
  */
 public class Vertex {
 
@@ -15,21 +17,17 @@ public class Vertex {
         this.index = index;
         expanded = false;
         weight = Integer.MAX_VALUE;
-        parent = ' ';
+        parent = '_';
     }
 
     public void reset(){
         expanded = false;
         weight = Integer.MAX_VALUE;
-        parent = ' ';
+        parent = '_';
     }
 
     public int getIndex() {
         return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public int getWeight() {
@@ -58,10 +56,6 @@ public class Vertex {
 
     public char getName() {
         return name;
-    }
-
-    public void setName(char name) {
-        this.name = name;
     }
 }
 
