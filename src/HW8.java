@@ -11,12 +11,7 @@ public class HW8 {
 
         int[][] graph = createTestGraph1();
 
-//        for (int i = 0; i < 6; i++) {
-//            for (int j = 0; j < 6; j++) {
-//                System.out.print(graph[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+        int[][] shortestPairs = new int[6][6];
 
         Vertex A = new Vertex(0, 'A');
         Vertex B = new Vertex(1, 'B');
@@ -28,8 +23,21 @@ public class HW8 {
 
         Vertex[] verticesList = {A, B, C, D, E, F};
 
-        dijkstrasAlgorithm(graph, A, verticesList);
+        dijkstrasAlgorithm(graph, A, verticesList, shortestPairs);
+        dijkstrasAlgorithm(graph, B, verticesList, shortestPairs);
+        dijkstrasAlgorithm(graph, C, verticesList, shortestPairs);
+        dijkstrasAlgorithm(graph, D, verticesList, shortestPairs);
+        dijkstrasAlgorithm(graph, E, verticesList, shortestPairs);
+        dijkstrasAlgorithm(graph, F, verticesList, shortestPairs);
 
+
+        System.out.println("Matrix for the shortest path between pairs;");
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.print(shortestPairs[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     public static int[][] createTestGraph1(){
@@ -46,8 +54,7 @@ public class HW8 {
         return graph;
     }
 
-    public static Vertex[] dijkstrasAlgorithm(int[][] graph, Vertex source, Vertex[] verticesList){
-//        ArrayList<Integer> weightsList = new ArrayList<Integer>();
+    public static void dijkstrasAlgorithm(int[][] graph, Vertex source, Vertex[] verticesList, int[][] shortestPairs){
         source.setWeight(0);
         source.setExpanded(true);
 
@@ -67,19 +74,25 @@ public class HW8 {
             }
 
             int min = inf;
-            int mincolumn = -1;
+            int minColumn = -1;
             for(Vertex element: verticesList){
                 if (element.isExpanded() == false && element.getWeight() < min) {
                     min = element.getWeight();
-                    mincolumn = element.getIndex();
+                    minColumn = element.getIndex();
                 }
             }
 
-            verticesList[mincolumn].setExpanded(true);
-            row  = mincolumn;
+            verticesList[minColumn].setExpanded(true);
+            row  = minColumn;
             status = needsExpanding(verticesList);
         }
-        return verticesList;
+
+
+        for (int i = 0; i < shortestPairs.length; i++) {
+            shortestPairs[source.getIndex()][i] = verticesList[i].getWeight();
+            verticesList[i].reset();
+        }
+
     }
 
     public static boolean needsExpanding (Vertex[] verticesList){

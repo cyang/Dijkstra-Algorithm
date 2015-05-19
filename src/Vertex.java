@@ -18,6 +18,12 @@ public class Vertex {
         parent = ' ';
     }
 
+    public void reset(){
+        expanded = false;
+        weight = Integer.MAX_VALUE;
+        parent = ' ';
+    }
+
     public int getIndex() {
         return index;
     }
