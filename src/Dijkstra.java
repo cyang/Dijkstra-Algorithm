@@ -4,7 +4,7 @@
  * @since       2015-05-19
  */
 
-public class HW8 {
+public class Dijkstra {
     // infinity
     private static int inf = Integer.MAX_VALUE;
 
